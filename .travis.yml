@@ -12,4 +12,4 @@ before_script:
   - 'yarn commitlint --from="$TRAVIS_COMMIT"'
 script:
   - yarn test
-  - yarn cypress run --record
+  - yarn cypress run --record --key 2bebfc25-8487-4bf0-a6c8-4cfe5f64cc72
