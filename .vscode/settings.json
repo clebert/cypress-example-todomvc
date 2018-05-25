@@ -1,0 +1,14 @@
+{
+  "problems.decorations.enabled": false,
+  "search.exclude": {
+    "**/node_modules/**": true,
+    "**/npm-debug.log": true,
+    "**/package-lock.json": true,
+    "**/yarn-error.log": true
+  },
+  "prettier.bracketSpacing": false,
+  "prettier.singleQuote": true,
+  "tslint.enable": true,
+  "tslint.ignoreDefinitionFiles": false,
+  "typescript.tsdk": "./node_modules/typescript/lib/"
+}
