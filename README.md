@@ -7,9 +7,21 @@
 
 ## Getting started
 
+### Installing the dependencies
+
 ```sh
-yarn && yarn start
+yarn
 ```
+
+### Starting the test runner
+
+```sh
+yarn start
+```
+
+### Showing the recorded CI tests
+
+You can find the dashboard [here](https://dashboard.cypress.io/#/projects/5w61vf/runs).
 
 ---
 
