@@ -3,7 +3,6 @@
   "compilerOptions": {
     "baseUrl": "../node_modules",
     "lib": ["dom", "es2017"],
-    "target": "es5",
     "types": ["cypress"]
   },
   "include": ["**/*.ts"]
