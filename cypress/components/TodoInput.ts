@@ -1,22 +1,21 @@
-import {Component} from './Component';
+import {Component, Props} from './Component';
 
-export class TodoInput extends Component {
-  public readonly selector: string = '.new-todo';
+export class TodoInputProps extends Props {
+  public beFocused(): void {
+    cy.focused().should(`${this.not}have.class`, 'new-todo');
+  }
+
+  public haveValue(text: string): void {
+    this.element.should(`${this.not}have.value`, text);
+  }
+}
+
+export class TodoInput extends Component<TodoInputProps> {
+  protected readonly Props = TodoInputProps;
+  protected readonly selector: string = '.new-todo';
 
   public type(text: string): this {
     this.element.type(text);
-
-    return this;
-  }
-
-  public shouldBeFocused(): this {
-    cy.focused().should('have.class', 'new-todo');
-
-    return this;
-  }
-
-  public shouldHaveValue(text: string): this {
-    this.element.should('have.value', text);
 
     return this;
   }

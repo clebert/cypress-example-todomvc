@@ -1,8 +1,42 @@
+export type ElementQuery = () => Cypress.Chainable<JQuery>;
+
+export class Props {
+  protected readonly not: string;
+
+  private readonly _query: ElementQuery;
+
+  public constructor(query: ElementQuery, negated: boolean) {
+    this.not = negated ? 'not.' : '';
+    this._query = query;
+  }
+
+  protected get element(): Cypress.Chainable<JQuery> {
+    return this._query();
+  }
+
+  public exist(): void {
+    this.element.should(`${this.not}exist`);
+  }
+
+  public beHidden(): void {
+    this.element.should(`${this.not}be.hidden`);
+  }
+
+  public beVisible(): void {
+    this.element.should(`${this.not}be.visible`);
+  }
+}
+
+export interface PropsClass<TProps extends Props> {
+  new (query: () => Cypress.Chainable<JQuery>, negated: boolean): TProps;
+}
+
 export type ComponentLocator = (
   element: Cypress.Chainable<JQuery>
 ) => Cypress.Chainable<JQuery>;
 
-export abstract class Component {
+export abstract class Component<TProps extends Props> {
+  protected abstract readonly Props: PropsClass<TProps>;
   protected abstract readonly selector: string;
 
   private readonly _locator?: ComponentLocator;
@@ -14,6 +48,14 @@ export abstract class Component {
   ) {
     this._locator = locator;
     this._parentElement = parentElement;
+  }
+
+  public get should(): TProps {
+    return new this.Props(() => this.element, false);
+  }
+
+  public get shouldNot(): TProps {
+    return new this.Props(() => this.element, true);
   }
 
   protected get element(): Cypress.Chainable<JQuery> {
@@ -29,29 +71,5 @@ export abstract class Component {
 
     // tslint:disable-next-line no-any
     return new (this.constructor as any)(locator, this._parentElement);
-  }
-
-  public shouldExist(): this {
-    this.element.should('exist');
-
-    return this;
-  }
-
-  public shouldNotExist(): this {
-    this.element.should('not.exist');
-
-    return this;
-  }
-
-  public shouldBeHidden(): this {
-    this.element.should('be.hidden');
-
-    return this;
-  }
-
-  public shouldBeVisible(): this {
-    this.element.should('be.visible');
-
-    return this;
   }
 }

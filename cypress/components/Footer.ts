@@ -1,5 +1,6 @@
-import {Component} from './Component';
+import {Component, Props} from './Component';
 
-export class Footer extends Component {
-  public readonly selector: string = '.footer';
+export class Footer extends Component<Props> {
+  protected readonly Props = Props;
+  protected readonly selector: string = '.footer';
 }

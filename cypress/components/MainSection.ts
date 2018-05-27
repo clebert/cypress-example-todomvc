@@ -1,5 +1,6 @@
-import {Component} from './Component';
+import {Component, Props} from './Component';
 
-export class MainSection extends Component {
-  public readonly selector: string = '.main';
+export class MainSection extends Component<Props> {
+  protected readonly Props = Props;
+  protected readonly selector: string = '.main';
 }
