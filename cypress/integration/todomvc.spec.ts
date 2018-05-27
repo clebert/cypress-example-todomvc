@@ -3,6 +3,7 @@ import {MainSection} from '../components/MainSection';
 import {TodoCount} from '../components/TodoCount';
 import {TodoInput} from '../components/TodoInput';
 import {TodoItem} from '../components/TodoItem';
+import {ToggleAll} from '../components/ToggleAll';
 
 const TODO_ITEM_ONE = 'buy some cheese';
 const TODO_ITEM_TWO = 'feed the cat';
@@ -78,6 +79,50 @@ describe('TodoMVC - React', () => {
 
       new MainSection().shouldExist();
       new Footer().shouldExist();
+    });
+  });
+
+  context('Mark all as completed', () => {
+    beforeEach(() => {
+      new TodoInput()
+        .type(TODO_ITEM_ONE)
+        .type('{enter}')
+        .type(TODO_ITEM_TWO)
+        .type('{enter}')
+        .type(TODO_ITEM_THREE)
+        .type('{enter}');
+    });
+
+    it('should allow me to mark all items as completed', () => {
+      const todo1 = new TodoItem(TodoItem.nth(1)).shouldBeActive();
+      const todo2 = new TodoItem(TodoItem.nth(2)).shouldBeActive();
+      const todo3 = new TodoItem(TodoItem.nth(3)).shouldBeActive();
+
+      new ToggleAll().click();
+
+      todo1.shouldBeCompleted();
+      todo2.shouldBeCompleted();
+      todo3.shouldBeCompleted();
+    });
+
+    it('should allow me to clear the complete state of all items', () => {
+      new ToggleAll().click().click();
+
+      new TodoItem(TodoItem.nth(1)).shouldBeActive();
+      new TodoItem(TodoItem.nth(2)).shouldBeActive();
+      new TodoItem(TodoItem.nth(3)).shouldBeActive();
+    });
+
+    it('complete all checkbox should update state when items are completed / cleared', () => {
+      const toggleAll = new ToggleAll().click().shouldBeChecked();
+
+      const todo1 = new TodoItem(TodoItem.nth(1)).toggle();
+
+      toggleAll.shouldNotBeChecked();
+
+      todo1.toggle();
+
+      toggleAll.shouldBeChecked();
     });
   });
 });
