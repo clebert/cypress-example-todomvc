@@ -1,5 +1,5 @@
 {
-  "name": "cypress-test",
+  "name": "cypress-example-todomvc",
   "private": true,
   "scripts": {
     "commitmsg": "commitlint --edit",
