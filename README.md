@@ -25,7 +25,7 @@ yarn start
 
 You can find the dashboard [here](https://dashboard.cypress.io/#/projects/5w61vf/runs).
 
-## Implemented tests (TodoMVC - React)
+## TodoMVC - React
 
 ### When page is initially opened
 
