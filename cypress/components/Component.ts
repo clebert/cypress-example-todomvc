@@ -3,10 +3,6 @@ export type ComponentLocator = (
 ) => Cypress.Chainable<JQuery>;
 
 export abstract class Component {
-  public static nth(position: number): ComponentLocator {
-    return element => element.eq(position - 1);
-  }
-
   protected abstract readonly selector: string;
 
   private readonly _locator?: ComponentLocator;
@@ -26,6 +22,13 @@ export abstract class Component {
     );
 
     return this._locator ? this._locator(element) : element;
+  }
+
+  public nth(position: number): this {
+    const locator = () => this.element.eq(position - 1);
+
+    // tslint:disable-next-line no-any
+    return new (this.constructor as any)(locator, this._parentElement);
   }
 
   public shouldExist(): this {

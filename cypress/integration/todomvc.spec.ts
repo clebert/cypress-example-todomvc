@@ -37,11 +37,11 @@ describe('TodoMVC - React', () => {
     it('should allow me to add todo items', () => {
       new TodoInput().type(TODO_ITEM_ONE).type('{enter}');
 
-      new TodoItem(TodoItem.nth(1)).shouldHaveText(TODO_ITEM_ONE);
+      new TodoItem().nth(1).shouldHaveText(TODO_ITEM_ONE);
 
       new TodoInput().type(TODO_ITEM_TWO).type('{enter}');
 
-      new TodoItem(TodoItem.nth(2)).shouldHaveText(TODO_ITEM_TWO);
+      new TodoItem().nth(2).shouldHaveText(TODO_ITEM_TWO);
     });
 
     it('should clear text input field when an item is added', () => {
@@ -63,15 +63,15 @@ describe('TodoMVC - React', () => {
 
       new TodoCount().shouldHaveText('3 items left');
 
-      new TodoItem(TodoItem.nth(1)).shouldHaveText(TODO_ITEM_ONE);
-      new TodoItem(TodoItem.nth(2)).shouldHaveText(TODO_ITEM_TWO);
-      new TodoItem(TodoItem.nth(3)).shouldHaveText(TODO_ITEM_THREE);
+      new TodoItem().nth(1).shouldHaveText(TODO_ITEM_ONE);
+      new TodoItem().nth(2).shouldHaveText(TODO_ITEM_TWO);
+      new TodoItem().nth(3).shouldHaveText(TODO_ITEM_THREE);
     });
 
     it('should trim text input', () => {
       new TodoInput().type(`    ${TODO_ITEM_ONE}    `).type('{enter}');
 
-      new TodoItem(TodoItem.nth(1)).shouldHaveText(TODO_ITEM_ONE);
+      new TodoItem().nth(1).shouldHaveText(TODO_ITEM_ONE);
     });
 
     it('should show #main and #footer when items added', () => {
@@ -94,9 +94,9 @@ describe('TodoMVC - React', () => {
     });
 
     it('should allow me to mark all items as completed', () => {
-      const todo1 = new TodoItem(TodoItem.nth(1)).shouldBeActive();
-      const todo2 = new TodoItem(TodoItem.nth(2)).shouldBeActive();
-      const todo3 = new TodoItem(TodoItem.nth(3)).shouldBeActive();
+      const todo1 = new TodoItem().nth(1).shouldBeActive();
+      const todo2 = new TodoItem().nth(2).shouldBeActive();
+      const todo3 = new TodoItem().nth(3).shouldBeActive();
 
       new ToggleAll().click();
 
@@ -108,15 +108,15 @@ describe('TodoMVC - React', () => {
     it('should allow me to clear the complete state of all items', () => {
       new ToggleAll().click().click();
 
-      new TodoItem(TodoItem.nth(1)).shouldBeActive();
-      new TodoItem(TodoItem.nth(2)).shouldBeActive();
-      new TodoItem(TodoItem.nth(3)).shouldBeActive();
+      new TodoItem().nth(1).shouldBeActive();
+      new TodoItem().nth(2).shouldBeActive();
+      new TodoItem().nth(3).shouldBeActive();
     });
 
     it('complete all checkbox should update state when items are completed / cleared', () => {
       const toggleAll = new ToggleAll().click().shouldBeChecked();
 
-      const todo1 = new TodoItem(TodoItem.nth(1)).toggle();
+      const todo1 = new TodoItem().nth(1).toggle();
 
       toggleAll.shouldNotBeChecked();
 
