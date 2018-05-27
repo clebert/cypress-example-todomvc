@@ -3,7 +3,7 @@
 [![Build Status][badge-travis-image]][badge-travis-link]
 [![TypeScript][badge-typescript-image]][badge-typescript-link]
 
-> A new implementation of the [official TodoMVC tests](https://github.com/tastejs/todomvc/blob/master/tests/test.js) written with [Cypress](https://www.cypress.io/) using the [Page Object design pattern](https://martinfowler.com/bliki/PageObject.html).
+> A [new implementation](https://github.com/clebert/cypress-example-todomvc/blob/master/cypress/integration/todomvc.spec.ts) of the [official TodoMVC tests](https://github.com/tastejs/todomvc/blob/master/tests/test.js) written with [Cypress](https://www.cypress.io/) using the [Page Object design pattern](https://martinfowler.com/bliki/PageObject.html).
 
 Another implementation written with Cypress **but without** using the Page Object design pattern can be found [here](https://github.com/cypress-io/cypress-example-todomvc).
 
