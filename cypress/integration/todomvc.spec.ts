@@ -10,7 +10,12 @@ const TODO_ITEM_THREE = 'book a doctors appointment';
 
 describe('TodoMVC - React', () => {
   beforeEach(() => {
-    cy.visit('http://todomvc.com/examples/react/#/');
+    // We've set our baseUrl to be http://todomvc.com/examples/react/#
+    // which is automatically prepended to cy.visit
+    //
+    // https://on.cypress.io/api/visit
+
+    cy.visit('/');
   });
 
   context('When page is initially opened', () => {
