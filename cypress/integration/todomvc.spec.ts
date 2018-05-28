@@ -1,7 +1,7 @@
 import {Footer} from '../components/Footer';
 import {MainSection} from '../components/MainSection';
+import {NewTodoInput} from '../components/NewTodoInput';
 import {TodoCount} from '../components/TodoCount';
-import {TodoInput} from '../components/TodoInput';
 import {TodoItem} from '../components/TodoItem';
 import {ToggleAll} from '../components/ToggleAll';
 
@@ -12,8 +12,8 @@ describe('TodoMVC - React', () => {
 
   const footer = new Footer();
   const mainSection = new MainSection();
+  const newTodoInput = new NewTodoInput();
   const todoCount = new TodoCount();
-  const todoInput = new TodoInput();
   const todoItem = new TodoItem();
   const todoItem1 = todoItem.nth(1);
   const todoItem2 = todoItem.nth(2);
@@ -31,7 +31,7 @@ describe('TodoMVC - React', () => {
 
   context('When page is initially opened', () => {
     it('should focus on the todo input field', () => {
-      todoInput.should.beFocused();
+      newTodoInput.should.beFocused();
     });
   });
 
@@ -45,22 +45,22 @@ describe('TodoMVC - React', () => {
 
   context('New Todo', () => {
     it('should allow me to add todo items', () => {
-      todoInput.type(TODO_ITEM_ONE).type('{enter}');
+      newTodoInput.type(TODO_ITEM_ONE).type('{enter}');
 
       todoItem1.should.haveText(TODO_ITEM_ONE);
 
-      todoInput.type(TODO_ITEM_TWO).type('{enter}');
+      newTodoInput.type(TODO_ITEM_TWO).type('{enter}');
 
       todoItem2.should.haveText(TODO_ITEM_TWO);
     });
 
     it('should clear text input field when an item is added', () => {
-      todoInput.type(TODO_ITEM_ONE).should.haveValue(TODO_ITEM_ONE);
-      todoInput.type('{enter}').should.haveValue('');
+      newTodoInput.type(TODO_ITEM_ONE).should.haveValue(TODO_ITEM_ONE);
+      newTodoInput.type('{enter}').should.haveValue('');
     });
 
     it('should append new items to the bottom of the list', () => {
-      todoInput
+      newTodoInput
         .type(TODO_ITEM_ONE)
         .type('{enter}')
         .type(TODO_ITEM_TWO)
@@ -76,13 +76,13 @@ describe('TodoMVC - React', () => {
     });
 
     it('should trim text input', () => {
-      todoInput.type(`    ${TODO_ITEM_ONE}    `).type('{enter}');
+      newTodoInput.type(`    ${TODO_ITEM_ONE}    `).type('{enter}');
 
       todoItem1.should.haveText(TODO_ITEM_ONE);
     });
 
     it('should show #main and #footer when items added', () => {
-      todoInput.type(TODO_ITEM_ONE).type('{enter}');
+      newTodoInput.type(TODO_ITEM_ONE).type('{enter}');
 
       mainSection.should.exist();
       footer.should.exist();
@@ -91,7 +91,7 @@ describe('TodoMVC - React', () => {
 
   context('Mark all as completed', () => {
     beforeEach(() => {
-      todoInput
+      newTodoInput
         .type(TODO_ITEM_ONE)
         .type('{enter}')
         .type(TODO_ITEM_TWO)
@@ -130,6 +130,56 @@ describe('TodoMVC - React', () => {
       todoItem1.toggle();
 
       toggleAll.should.beChecked();
+    });
+  });
+
+  context('Item', () => {
+    it('should allow me to mark items as complete', () => {
+      newTodoInput.type(TODO_ITEM_ONE).type('{enter}');
+      newTodoInput.type(TODO_ITEM_TWO).type('{enter}');
+
+      todoItem1.toggle().should.beCompleted();
+
+      todoItem2.shouldNot.beCompleted();
+
+      todoItem2.toggle().should.beCompleted();
+
+      todoItem1.should.beCompleted();
+    });
+
+    it('should allow me to un-mark items as complete', () => {
+      newTodoInput.type(TODO_ITEM_ONE).type('{enter}');
+      newTodoInput.type(TODO_ITEM_TWO).type('{enter}');
+
+      todoItem1.toggle().should.beCompleted();
+
+      todoItem2.shouldNot.beCompleted();
+
+      todoItem1.toggle().shouldNot.beCompleted();
+
+      todoItem2.shouldNot.beCompleted();
+    });
+
+    it('should allow me to edit an item', () => {
+      newTodoInput
+        .type(TODO_ITEM_ONE)
+        .type('{enter}')
+        .type(TODO_ITEM_TWO)
+        .type('{enter}')
+        .type(TODO_ITEM_THREE)
+        .type('{enter}');
+
+      todoItem2.edit();
+
+      todoItem2
+        .findEditTodoInput()
+        .clear()
+        .type('buy some sausages')
+        .type('{enter}');
+
+      todoItem1.should.haveText(TODO_ITEM_ONE);
+      todoItem2.should.haveText('buy some sausages');
+      todoItem3.should.haveText(TODO_ITEM_THREE);
     });
   });
 });

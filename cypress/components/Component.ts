@@ -40,14 +40,11 @@ export abstract class Component<TProps extends Props> {
   protected abstract readonly selector: string;
 
   private readonly _locator?: ComponentLocator;
-  private readonly _parentElement?: Cypress.Chainable<JQuery>;
+  private readonly _parentQuery?: ElementQuery;
 
-  public constructor(
-    locator?: ComponentLocator,
-    parentElement?: Cypress.Chainable<JQuery>
-  ) {
+  public constructor(locator?: ComponentLocator, parentQuery?: ElementQuery) {
     this._locator = locator;
-    this._parentElement = parentElement;
+    this._parentQuery = parentQuery;
   }
 
   public get should(): TProps {
@@ -59,9 +56,11 @@ export abstract class Component<TProps extends Props> {
   }
 
   protected get element(): Cypress.Chainable<JQuery> {
-    const element = (this._parentElement || cy.get(':root')).find(
-      this.selector
-    );
+    const parentElement = this._parentQuery
+      ? this._parentQuery()
+      : cy.get(':root');
+
+    const element = parentElement.find(this.selector);
 
     return this._locator ? this._locator(element) : element;
   }
@@ -70,6 +69,6 @@ export abstract class Component<TProps extends Props> {
     const locator = () => this.element.eq(position - 1);
 
     // tslint:disable-next-line no-any
-    return new (this.constructor as any)(locator, this._parentElement);
+    return new (this.constructor as any)(locator, this._parentQuery);
   }
 }

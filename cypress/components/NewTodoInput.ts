@@ -1,6 +1,6 @@
 import {Component, Props} from './Component';
 
-export class TodoInputProps extends Props {
+export class NewTodoInputProps extends Props {
   public beFocused(): void {
     cy.focused().should(`${this.not}have.class`, 'new-todo');
   }
@@ -10,8 +10,8 @@ export class TodoInputProps extends Props {
   }
 }
 
-export class TodoInput extends Component<TodoInputProps> {
-  protected readonly Props = TodoInputProps;
+export class NewTodoInput extends Component<NewTodoInputProps> {
+  protected readonly Props = NewTodoInputProps;
   protected readonly selector: string = '.new-todo';
 
   public type(text: string): this {

@@ -51,9 +51,9 @@ You can find the dashboard [here](https://dashboard.cypress.io/#/projects/5w61vf
 
 ### Item
 
-* [ ] it should allow me to mark items as complete
-* [ ] it should allow me to un-mark items as complete
-* [ ] it should allow me to edit an item
+* [x] it should allow me to mark items as complete
+* [x] it should allow me to un-mark items as complete
+* [x] it should allow me to edit an item
 
 ### Editing
 
